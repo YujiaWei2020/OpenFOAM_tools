@@ -1,0 +1,41 @@
+
+1. Add in controlDict
+
+functions
+{
+    elevation
+    {
+        type            surfaces;
+        interpolationScheme linear;
+        functionObjectLibs
+        (
+            "libsampling.so"
+        );
+        outputControl  outputTime;
+        surfaceFormat  vtk;
+        fields
+        (
+            alpha1
+        );
+        surfaces
+        (
+            topFreeSurface
+            {
+                type        isoSurface;
+                isoField    alpha.water;
+                isoValue    0.5;
+                interpolate true;
+            }
+        );
+    }
+}
+
+2. Options
+// Surface output format. Choice of
+//      null        : suppress output
+//      foamFile    : separate points, faces and values file
+//      dx          : DX scalar or vector format
+//      vtk         : VTK ascii format
+//      raw         : x y z value format for use with e.g. gnuplot 'splot'.
+//      stl         : ascii stl. Does not contain values!
+surfaceFormat vtk;

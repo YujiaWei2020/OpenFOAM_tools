@@ -1,3 +1,5 @@
+Although most of the wave generation toolbox provide probe functions, it's good to have free surface plane export for use.
+
 
 1. Add in controlDict
 
@@ -15,7 +17,7 @@ functions
         surfaceFormat  vtk;
         fields
         (
-            alpha1
+            alpha.water
         );
         surfaces
         (
@@ -39,3 +41,5 @@ functions
 //      raw         : x y z value format for use with e.g. gnuplot 'splot'.
 //      stl         : ascii stl. Does not contain values!
 surfaceFormat vtk;
+
+

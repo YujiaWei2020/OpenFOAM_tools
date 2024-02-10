@@ -1,0 +1,28 @@
+
+1. Add a file called surfaceDistance in system.
+
+	    // Mandatory entries (unmodifiable)
+        type            surfaceDistance;
+        libs            ("libfieldFunctionObjects.so");
+
+	    // Mandatory entries (runtime modifiable)
+	    geometry
+	    {
+
+    		inlet.stl
+    		{
+    		    type triSurfaceMesh;
+    		}
+       		outlet.stl
+    		{
+    		    type triSurfaceMesh;
+    		}
+	    }
+
+	    // Optional entries (runtime modifiable)
+	    calculateCells  true;
+
+2. Excute commands: 
+postProcess -func surfaceDistance
+foamToVTK
+

@@ -1,0 +1,43 @@
+# Extract out a slice 2D plane at target position, if no, interpolation based on the closed two planes
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define simulation parameters
+nx, ny, nz = 50, 30, 40  # Number of grid points in x, y, z directions
+delta_x, delta_y, delta_z = 1.0, 1.0, 1.0  # Grid spacing in each direction
+
+# Create a synthetic 3D scalar field (e.g., temperature)
+x = np.linspace(0, (nx - 1) * delta_x, nx)
+y = np.linspace(0, (ny - 1) * delta_y, ny)
+z = np.linspace(0, (nz - 1) * delta_z, nz)
+
+X, Y, Z = np.meshgrid(x, y, z, indexing='ij')
+print(X.shape)
+# Create a 3D scalar field (e.g., temperature) as a function of x, y, z
+data = np.sin(X) * np.cos(Y) * np.exp(-Z / 10.0)
+
+# Specify the desired y-position for extraction
+desired_y_position = 4.5
+
+# Interpolate between neighboring planes
+y_index_lower = int(np.floor(desired_y_position / delta_y))
+y_index_upper = y_index_lower + 1
+
+if y_index_upper >= ny:
+    y_index_upper = ny - 1
+
+alpha = (desired_y_position - y_index_lower * delta_y) / delta_y
+
+lower_plane_data = data[:, y_index_lower, :]
+upper_plane_data = data[:, y_index_upper, :]
+
+y_plane_data = (1 - alpha) * lower_plane_data + alpha * upper_plane_data
+
+# Plot the interpolated data
+plt.contourf(X[:, 0, :], Z[:, 0, :], y_plane_data, cmap='viridis')
+plt.title(f'Interpolated Data at y = {desired_y_position}')
+plt.xlabel('X-axis')
+plt.ylabel('Z-axis')
+plt.colorbar()
+plt.show()

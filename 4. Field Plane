@@ -32,3 +32,44 @@
             U
         );
     }
+
+
+# For v > OFV2021, the vtk will not generate auto, requires to add format options
+    velocity
+    {
+        type            surfaces;
+        interpolationScheme cellPoint;
+        surfaceFormat vtk;
+        functionObjectLibs
+        (
+            "libsampling.so"
+        );
+        surfaces
+        (
+           velocityU
+           {
+               planeType   pointAndNormal;
+               pointAndNormalDict
+               {
+               basePoint (0 0 0);
+               normalVector (0 0 1);
+               }
+               type cuttingPlane;
+               interpolate     true;
+           }
+        );
+        outputControl   timeStep;
+        outputInterval  1;
+        fields
+        (
+            U
+        );
+        formatOptions
+        {
+            vtk
+            {
+                legacy true;
+                // format ascii;
+            } 
+        };
+    }

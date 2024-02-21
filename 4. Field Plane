@@ -1,0 +1,34 @@
+# Extract out field plane data and written into VTK file
+
+# Given below function to controlDict. 
+
+    velocity
+    {
+        type            surfaces;
+        interpolationScheme cellPoint;
+        surfaceFormat vtk;
+        functionObjectLibs
+        (
+            "libsampling.so"
+        );
+        surfaces
+        (
+           velocityU
+           {
+               planeType   pointAndNormal;
+               pointAndNormalDict
+               {
+               basePoint (0 0 0);
+               normalVector (0 0 1);
+               }
+               type cuttingPlane;
+               interpolate     true;
+           }
+        );
+        outputControl   timeStep;
+        outputInterval  1;
+        fields
+        (
+            U
+        );
+    }
